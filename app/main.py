@@ -5,13 +5,13 @@ from PIL import Image
 import io
 import numpy as np
 from core_ocr import *
-app = FastAPI()
-
+import uvicorn
 # dynamic.py
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.templating import Jinja2Templates
 import base64
- 
+import requests
+import json
 app = FastAPI()
  
 templates = Jinja2Templates(directory="templates")
@@ -37,3 +37,21 @@ def predict(request: Request,file: UploadFile = File(...)):
 
     return templates.TemplateResponse(
         "index.html", {"request": request,  "img": encoded_image,"Res":result,"results_img":encoded_image_1})
+@app.post("/api/")
+async def check_result(request: Request):
+    data = await request.json()
+    image_url = data.get("image_url", "")
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()
+        # Đọc dữ liệu của ảnh từ response
+        image_data = response.content
+        # Chuyển đổi dữ liệu của ảnh thành định dạng PIL Image
+        image = Image.open(io.BytesIO(image_data))
+        result,img = inference(image)
+    except:
+        return {"Result":"Image error"}
+    return {"Result":result}
+if __name__=="__main__":
+    
+    uvicorn.run("main:app",host="0.0.0.0",port=1234,reload=True)

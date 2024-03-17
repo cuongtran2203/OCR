@@ -13,14 +13,14 @@ def inference(img):
     image=cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
     result = ocr.ocr(image, cls=False)
     result=result[0]
-    print(result)
+    # print(result)
     boxes = [line[0] for line in result]
     txts = [line[1][0] for line in result]
-    print(txts)
+    # print(txts)
     results_txt=''
     txt=[]
     results_txt='\n'.join(t for t in txts)
-    print(results_txt)
+    # print(results_txt)
     scores = [line[1][1] for line in result]
     im_show = draw_ocr(image, boxes, txts, scores, font_path='simfang.ttf')
     im_show = Image.fromarray(im_show)
