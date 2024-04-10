@@ -1,0 +1,6 @@
+fastapi
+paddlepaddle
+paddleocr
+opencv-python
+pdf2image
+python-multipart

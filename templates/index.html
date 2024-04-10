@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <form action="/upload/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if data %}
+        <h2>OCR Text:</h2>
+        <table>
+            <tr>
+                <th>file name</th>
+                <th>Results</th>
+            </tr>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.filename }}</td>
+                <td>{{ item.results }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>

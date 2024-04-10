@@ -1,7 +1,0 @@
-paddlepaddle
-paddleocr
-torch
-opencv-python==4.6.0.66
-fastapi
-uvicorn
-python-multipart
